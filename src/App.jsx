@@ -1,14 +1,9 @@
 import { useEffect } from "react";
 import { useStore } from "./store";
 import AppRouter from "./routes/AppRouter";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "./lib/supabase";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_PROJECT_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
 
 function App() {
   const { session, setSession, loading } = useStore();
@@ -25,14 +20,41 @@ function App() {
     });
 
     return () => subscription.unsubscribe();
-  });
+  }, [setSession]);
 
   if (loading) {
     return null;
   }
 
   if (!session) {
-    return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="w-full max-w-md">
+          <Auth
+            supabaseClient={supabase}
+            appearance={{
+              theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    brand: "#4F46E5",
+                    brandAccent: "#4338CA",
+                  },
+                },
+              },
+              className: {
+                container: "login-container",
+                button: "login-button",
+                input: "login-input",
+                label: "login-label",
+              },
+            }}
+            providers={["google"]}
+            socialLayout="horizontal"
+          />
+        </div>
+      </div>
+    );
   }
 
   return <AppRouter />;

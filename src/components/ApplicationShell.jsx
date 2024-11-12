@@ -21,7 +21,8 @@ import {
 } from "@heroicons/react/24/outline";
 import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
+
+import { supabase } from "../lib/supabase";
 
 const teams = [
   { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
@@ -37,6 +38,14 @@ export default function ApplicationShell({ children }) {
   const location = useLocation();
   const currentPath = location.pathname;
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   const navigation = [
     {
@@ -326,7 +335,10 @@ export default function ApplicationShell({ children }) {
                 </MenuItem>
               ))}
               <MenuItem>
-                <a onClick={} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none">
+                <a
+                  onClick={handleSignOut}
+                  className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                >
                   <span className="sr-only">Sign Out User</span>
                   <span>Sign out</span>
                 </a>
