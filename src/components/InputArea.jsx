@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import {
   PaperClipIcon,
   MicrophoneIcon,
@@ -14,7 +14,7 @@ export default function InputArea() {
     useStore();
   useAudioRecorder();
 
-  const handleTranscription = async () => {
+  const handleTranscription = useCallback(async () => {
     if (audioBlob) {
       try {
         const transcription = await transcribeAudio(audioBlob);
@@ -23,13 +23,13 @@ export default function InputArea() {
         console.error("Failed to transcribe audio:", error);
       }
     }
-  };
+  }, [audioBlob, setPrompt]);
 
   useEffect(() => {
     if (audioBlob && !recording) {
       handleTranscription();
     }
-  }, [audioBlob, recording]);
+  }, [audioBlob, recording, handleTranscription]);
   return (
     <form action="#" className="relative">
       <div className="mx-auto max-w-lg overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">

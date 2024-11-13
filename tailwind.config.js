@@ -2,17 +2,20 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 import animate from "tailwindcss-animate";
+import fluid, { extract, screens, fontSize } from "fluid-tailwind";
 
 export default {
   darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: {
+    files: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+    extract,
+  },
   theme: {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      screens,
+      fontSize,
     },
     extend: {
       colors: {
@@ -76,7 +79,10 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "pulse-shadow": "pulse-shadow 4s ease-in-out infinite",
       },
+      screens: {
+        xs: "20 rem",
+      },
     },
   },
-  plugins: [forms, animate],
+  plugins: [forms, animate, fluid],
 };
