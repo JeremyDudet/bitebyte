@@ -347,7 +347,7 @@ export default function ApplicationShell({ children }) {
           </Menu>
         </div>
 
-        <main className="lg:pl-72 h-[92.8vh] lg:h-[100vh]">
+        <main className="lg:pl-72  lg:h-[100vh]">
           <div className=" h-full">
             <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6 h-full">
               {children}

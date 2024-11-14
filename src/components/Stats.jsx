@@ -16,7 +16,7 @@ const stats = [
     changeType: "increase",
   },
   {
-    name: "Avg. Click Rate",
+    name: "Rate of progress",
     stat: "24.57%",
     previousStat: "28.62%",
     change: "4.05%",
